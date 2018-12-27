@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 ########################################################################################
 # Make the table containing all the 16s data of interest and the info of each partient #
@@ -49,10 +51,11 @@ def var_dict(d):
 	for k in dict.keys(d):
 		variance[k]=np.std(d[k])*np.std(d[k])
 	return variance
-def get_n_largest(dictionary, n):
-    return sorted([(value, key) for key, value in dictionary.items()],
-                  reverse=True)[:n]
 
+def get_n_largest(d, n):
+	
+	return sorted([(value, key) for key, value in d.items()],
+                  reverse=True)[:n]
 
 
 
@@ -69,24 +72,32 @@ variance=var_dict(data_dict)
 #we now have our most variant bacteria 
 most_variant=get_n_largest(variance,200)
 
+x_labels=[]
+healthy=[]
+CD=[]
+UC=[]
+
+for (v,k) in most_variant:
+	x_labels.append(k)
+	healthy.append(data_dict[k][0])
+	CD.append(data_dict[k][1])
+	UC.append(data_dict[k][2])
+
+indices=range(len(x_labels))
+width = np.min(np.diff(indices))/3.
 
 
+ax = plt.subplot(111)
+ax.bar(indices-width/2., healthy,width=0.2,color='g',align='center')
+ax.bar(indices, CD,width=0.2,color='y',align='center')
+ax.bar(indices+width/2, UC,width=0.2,color='r',align='center')
+ax.axes.set_xticklabels(x_labels)
 
-
-
-'''
-
-
-avgandName= df[['#OTU ID', "AVG"]]
-avgandName=avgandName[avgandName.AVG > 1]
-df= avgandName
-
-plt.bar(df['#OTU ID'],df["AVG"])
 plt.ylim([0,1000])
-plt.xticks(rotation=90)
+plt.xticks(rotation='vertical')
 
 
-plt.show()'''
+plt.show()
 
 
 
