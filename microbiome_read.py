@@ -138,13 +138,6 @@ plt.tight_layout()
 plt.ylim([0,2000])
 plt.show()
 
-#Training model
-#Grab ESR data
-#OTU to split on : 
-#Non-IBD: avg ~700 for non-ibd Unc01pk4, low for CD and UC
-#CD: 
-#UC: 300-400 for GX7Fr128 only for UC
-#
 
 
 
